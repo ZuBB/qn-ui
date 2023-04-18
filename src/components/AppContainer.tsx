@@ -2,12 +2,11 @@ import React, { useEffect, useCallback } from 'react';
 import { Box, Flex, Spacer } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
 import { AppHeader } from './AppHeader';
-import { IncompletedTodos } from './IncompletedTodos';
-import { CompletedTodos } from './CompletedTodos';
-import { AddTodo } from './AddTodo';
+import { GenericTodoList } from './GenericTodoList';
+import { AddTodo } from '../AddTodo';
 import { SearchTodos } from './SearchTodos';
-import { useTodoStore } from './store'
-import { loadTodos } from './loadTodos'
+import { useTodoStore } from '../store'
+import { loadTodos } from '../loadTodos'
 
 export const AppContainer = () => {
   const setTodos = useTodoStore(state => state.setTodos);
@@ -41,12 +40,19 @@ export const AppContainer = () => {
       <Flex direction="row" mt="10">
         <Flex direction="column" w="48%">
           <AddTodo />
-          <IncompletedTodos />
+          <GenericTodoList
+            storeKey='incompleted'
+            listProps={{maxH: "310px", overflowY: "scroll"}}
+          >
+            To Do
+          </GenericTodoList>
         </Flex>
         <Spacer />
         <Flex direction="column" w="48%">
           <SearchTodos />
-          <CompletedTodos />
+          <GenericTodoList storeKey='completed'>
+            Done
+          </GenericTodoList>
         </Flex>
       </Flex>
     </Box>
