@@ -27,8 +27,8 @@ export const AddTodo = () => {
 
   const createTodo = async () => {
     try {
-      await axios.post(addTodoUrl, { todo })
-      toast({ status: 'success', title: 'To do created!' })
+      const newTodo = await (await axios.post(addTodoUrl, { todo })).data
+      toast({ status: 'success', title: `Todo "${newTodo.todo}" created!` })
       setTodo('')
 
       setTodos(await loadTodos())
