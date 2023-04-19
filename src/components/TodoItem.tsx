@@ -9,10 +9,9 @@ import {
   ListItem,
   Text,
 } from '@chakra-ui/react';
+import { createNanoEvents } from 'nanoevents';
 import axios from 'axios';
 import { TodoItemEditableControls } from './TodoItemEditableControls';
-import { useTodoStore } from '../store';
-import { loadTodos } from '../loadTodos';
 import { Todo } from '../interfaces';
 
 
@@ -27,18 +26,18 @@ type Props = {
 }
 
 export const TodoItem = ({ todo }: Props) => {
-  const setTodo = useTodoStore(state => state.setTodos);
+  const emitter = createNanoEvents();
 
   const onChangeHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const completed = event.currentTarget.checked
-    await axios.patch(getTodoUrl(todo.id), { completed })
-    setTodo(await loadTodos())
-  }
+    const completed = event.currentTarget.checked;
+    await axios.patch(getTodoUrl(todo.id), { completed });
+    emitter.emit('load-todos');
+  };
 
   const onDeleteHandler = () => {
     const deleteTodo = async () => {
       await axios.delete(getTodoUrl(todo.id));
-      setTodo(await loadTodos());
+      emitter.emit('load-todos');
     };
 
     deleteTodo();

@@ -12,7 +12,7 @@ export interface TodoState {
 export const useTodoStore = create<TodoState>()((set) => ({
   loading: false,
   todos: {
-    latestModified: '',
+    latestTimestamp: '',
     incompleted: [],
     completed: []
   },

@@ -1,8 +1,7 @@
 import React from 'react';
 import { ButtonGroup, HStack, IconButton, useEditableControls } from '@chakra-ui/react';
+import { createNanoEvents } from 'nanoevents';
 import axios from 'axios';
-import { useTodoStore } from '../store';
-import { loadTodos } from '../loadTodos';
 import { CheckIcon, CloseIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 const getTodoUrl = (id: number): string => `/api/todos/${id}`;
@@ -12,7 +11,7 @@ type Props = {
 }
 
 export const TodoItemEditableControls = ({ id }: Props) => {
-  const setTodo = useTodoStore(state => state.setTodos);
+  const emitter = createNanoEvents();
 
   const {
     isEditing,
@@ -24,7 +23,7 @@ export const TodoItemEditableControls = ({ id }: Props) => {
   const onDeleteHandler = () => {
     const deleteTodo = async () => {
       await axios.delete(getTodoUrl(id));
-      setTodo(await loadTodos());
+      emitter.emit('load-todos');
     };
 
     deleteTodo();

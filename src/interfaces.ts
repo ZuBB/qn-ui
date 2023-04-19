@@ -5,7 +5,7 @@ export interface Todo {
 }
 
 export interface AllTodos {
-  latestModified: string;
+  latestTimestamp: string;
   incompleted: Todo[];
   completed: Todo[];
 }

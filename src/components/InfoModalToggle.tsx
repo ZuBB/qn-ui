@@ -71,7 +71,7 @@ export const InfoModalToggle = () => {
           <ModalHeader>To Do App</ModalHeader>
           <ModalCloseButton />
           <ModalBody px="10">
-            <Text mb="3" fontWeight="bold" fontSize="2xl">Check-list</Text>
+            <Text mb="3" fontWeight="bold" fontSize="1xl">Check list</Text>
 
             {getCheckList()}
           </ModalBody>

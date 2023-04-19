@@ -11,25 +11,27 @@ import {
   ModalBody,
   ModalCloseButton,
   Spacer,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react';
+import { createNanoEvents } from 'nanoevents';
 import axios from 'axios';
-import { loadTodos } from '../loadTodos';
-import { useTodoStore } from '../store';
 
 const clearTodosUrl = '/api/todos/wipe';
 
 export const AppHeader = () => {
+  const toast = useToast();
+  const emitter = createNanoEvents();
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const setTodos = useTodoStore(state => state.setTodos);
 
   const onDelete = async () => {
     try {
       await axios.delete(clearTodosUrl);
-      await setTodos(await loadTodos())
+      emitter.emit('load-todos');
       onClose()
     } catch (error) {
       console.log('Smth happened', error)
+      toast({ status: 'error', title: 'Error occured during loading of todos' })
     }
   }
 

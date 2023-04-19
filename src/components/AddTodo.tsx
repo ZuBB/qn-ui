@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Flex, FormControl, Input, useToast } from '@chakra-ui/react';
+import { createNanoEvents } from 'nanoevents';
 import axios from 'axios';
-import { useTodoStore } from '../store'
-import { loadTodos } from '../loadTodos'
 import { getMessageFromBeResonse } from '../utils'
 
 
@@ -10,8 +9,8 @@ const addTodoUrl = '/api/todos'
 
 export const AddTodo = () => {
   const toast = useToast();
+  const emitter = createNanoEvents();
   const [todo, setTodo] = useState('');
-  const setTodos = useTodoStore(state => state.setTodos);
 
   const onChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
     setTodo(event.currentTarget.value);
@@ -31,7 +30,7 @@ export const AddTodo = () => {
       toast({ status: 'success', title: `Todo "${newTodo.todo}" created!` })
       setTodo('')
 
-      setTodos(await loadTodos())
+      emitter.emit('load-todos')
     } catch (error) {
       toast({ status: 'error', title: getMessageFromBeResonse(error) })
     }
