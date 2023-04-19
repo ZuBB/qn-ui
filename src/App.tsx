@@ -1,20 +1,15 @@
 import React from 'react';
-import { ChakraProvider, VStack, theme } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './components/ColorModeSwitcher';
-import { AppContainer } from './components/AppContainer';
+import { ChakraProvider, theme } from '@chakra-ui/react';
 import { Route, Routes } from "react-router-dom";
+import { Home } from './components/Home';
 
 export const App = () => (
-  <ChakraProvider theme={theme}>
+  <ChakraProvider
+    theme={theme}
+    toastOptions={{ defaultOptions: { position: 'top', duration: 4000 } }}
+  >
     <Routes>
       <Route path="/" element={<Home />} />
     </Routes>
   </ChakraProvider>
 );
-
-const Home = () => (
-  <VStack>
-    <ColorModeSwitcher alignSelf="end" />
-    <AppContainer />
-  </VStack>
-)
