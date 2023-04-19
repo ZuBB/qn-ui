@@ -3,50 +3,42 @@ import {
   Checkbox,
   Editable,
   EditableInput,
-  EditablePreview,
   Flex,
   Input,
   ListItem,
   Text,
 } from '@chakra-ui/react';
-import { createNanoEvents } from 'nanoevents';
 import axios from 'axios';
 import { TodoItemEditableControls } from './TodoItemEditableControls';
 import { Todo } from '../interfaces';
-
-
-import { IconButton } from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/icons'
-
-
-const getTodoUrl = (id: number): string => `/api/todos/${id}`;
+import { emitter } from '../event-bus';
 
 type Props = {
   todo: Todo
 }
 
-export const TodoItem = ({ todo }: Props) => {
-  const emitter = createNanoEvents();
+const getTodoUrl = (id: number): string => `/api/todos/${id}`;
 
-  const onChangeHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
+export const TodoItem = ({ todo }: Props) => {
+  const onToggleHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const completed = event.currentTarget.checked;
     await axios.patch(getTodoUrl(todo.id), { completed });
     emitter.emit('load-todos');
   };
 
-  const onDeleteHandler = () => {
-    const deleteTodo = async () => {
-      await axios.delete(getTodoUrl(todo.id));
+  const onUpdateHandler = (newTodo: string) => {
+    const updateTodo = async () => {
+      await axios.patch(getTodoUrl(todo.id), { todo: newTodo });
       emitter.emit('load-todos');
     };
 
-    deleteTodo();
-  }
+    updateTodo();
+  };
 
   return (
     <ListItem>
       <Flex role="group">
-        <Checkbox isChecked={todo.completed} onChange={onChangeHandler}>
+        <Checkbox isChecked={todo.completed} onChange={onToggleHandler}>
           <Text as="span" fontSize="2xl">
             {todo.todo}
           </Text>
@@ -57,22 +49,12 @@ export const TodoItem = ({ todo }: Props) => {
           fontSize='2xl'
           isPreviewFocusable={false}
           display="flex"
+          onSubmit={onUpdateHandler}
+          onCancel={onUpdateHandler}
         >
-          {/* <EditablePreview /> */}
-          <Input
-            w="85%"
-            size="sm"
-            as={EditableInput}
-          />
-          <TodoItemEditableControls id={todo.id} />
+          <Input w="85%" size="sm" as={EditableInput} />
+          <TodoItemEditableControls todo={todo} />
         </Editable>
-        {/* <IconButton
-          mx="-12px !important"
-          aria-label='Delete'
-          icon={<DeleteIcon />}
-          variant="link"
-          onClick={onDeleteHandler}
-        /> */}
       </Flex>
     </ListItem>
   );

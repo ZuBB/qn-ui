@@ -59,6 +59,7 @@ export const InfoModalToggle = () => {
   return (
     <>
       <IconButton
+        mt="3"
         onClick={onOpen}
         variant="link"
         icon={<InfoIcon />}

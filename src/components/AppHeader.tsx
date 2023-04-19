@@ -14,14 +14,13 @@ import {
   useDisclosure,
   useToast
 } from '@chakra-ui/react';
-import { createNanoEvents } from 'nanoevents';
 import axios from 'axios';
+import { emitter } from '../event-bus';
 
 const clearTodosUrl = '/api/todos/wipe';
 
 export const AppHeader = () => {
   const toast = useToast();
-  const emitter = createNanoEvents();
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const onDelete = async () => {
