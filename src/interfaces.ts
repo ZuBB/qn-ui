@@ -9,3 +9,8 @@ export interface AllTodos {
   incompleted: Todo[];
   completed: Todo[];
 }
+
+export interface BeError {
+  message: string;
+  statusCode: number;
+}
