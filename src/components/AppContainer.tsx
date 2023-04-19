@@ -3,7 +3,7 @@ import { Box, Flex, Spacer } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
 import { AppHeader } from './AppHeader';
 import { GenericTodoList } from './GenericTodoList';
-import { AddTodo } from '../AddTodo';
+import { AddTodo } from './AddTodo';
 import { SearchTodos } from './SearchTodos';
 import { useTodoStore } from '../store'
 import { loadTodos } from '../loadTodos'
@@ -23,7 +23,6 @@ export const AppContainer = () => {
     [setTodos]
   );
 
-  useEffect(() => { getTodos() }, [getTodos])
   useEffect(() => { getTodos() }, [getTodos, searchParams])
 
   return (
