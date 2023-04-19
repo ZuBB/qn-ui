@@ -48,9 +48,21 @@ export const InfoModalToggle = () => {
       <ListItem>
         Goodies:
         <UnorderedList>
-          <ListItem>Syncing</ListItem>
           <ListItem>Limit inserts & Rotate db: because of open access</ListItem>
-          <ListItem>...</ListItem>
+          <ListItem>Syncing</ListItem>
+          <ListItem>Per item edit/delete</ListItem>
+          <ListItem>Toasts</ListItem>
+          <ListItem>anything else?</ListItem>
+        </UnorderedList>
+      </ListItem>
+      <ListItem>
+        Nice to have:
+        <UnorderedList>
+          <ListItem>tests</ListItem>
+          <ListItem>i18n</ListItem>
+          <ListItem>dockerfile</ListItem>
+          <ListItem>Slimmer sync/API code at FE</ListItem>
+          <ListItem>anything else?</ListItem>
         </UnorderedList>
       </ListItem>
     </UnorderedList>
@@ -71,7 +83,7 @@ export const InfoModalToggle = () => {
         <ModalContent>
           <ModalHeader>To Do App</ModalHeader>
           <ModalCloseButton />
-          <ModalBody px="10">
+          <ModalBody px="10" maxH="30vh" overflowY="scroll">
             <Text mb="3" fontWeight="bold" fontSize="1xl">Check list</Text>
 
             {getCheckList()}
