@@ -11,9 +11,9 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { TodoItemEditableControls } from './TodoItemEditableControls';
-import { useTodoStore } from './store';
-import { loadTodos } from './loadTodos';
-import { Todo } from './interfaces';
+import { useTodoStore } from '../store';
+import { loadTodos } from '../loadTodos';
+import { Todo } from '../interfaces';
 
 
 import { IconButton } from '@chakra-ui/react';

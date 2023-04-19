@@ -14,8 +14,8 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { loadTodos } from './loadTodos';
-import { useTodoStore } from './store';
+import { loadTodos } from '../loadTodos';
+import { useTodoStore } from '../store';
 
 const clearTodosUrl = '/api/todos/wipe';
 

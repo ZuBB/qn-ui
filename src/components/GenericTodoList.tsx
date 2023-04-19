@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Heading, List } from '@chakra-ui/react';
 import { TodoItem } from './TodoItem'
-import { useTodoStore } from './store'
+import { useTodoStore } from '../store'
 
 type Props = {
   storeKey: 'completed' | 'incompleted';

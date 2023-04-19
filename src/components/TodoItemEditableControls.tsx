@@ -1,8 +1,8 @@
 import React from 'react';
 import { ButtonGroup, HStack, IconButton, useEditableControls } from '@chakra-ui/react';
 import axios from 'axios';
-import { useTodoStore } from './store';
-import { loadTodos } from './loadTodos';
+import { useTodoStore } from '../store';
+import { loadTodos } from '../loadTodos';
 import { CheckIcon, CloseIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 const getTodoUrl = (id: number): string => `/api/todos/${id}`;
