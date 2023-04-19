@@ -4,7 +4,6 @@ import axios from 'axios';
 import { emitter } from '../event-bus';
 import { getMessageFromBeResonse } from '../utils'
 
-
 const addTodoUrl = '/api/todos'
 
 export const AddTodo = () => {
@@ -28,10 +27,10 @@ export const AddTodo = () => {
       const newTodo = await (await axios.post(addTodoUrl, { todo })).data
       toast({ status: 'success', title: `Todo "${newTodo.todo}" created!` })
       setTodo('')
-
-      emitter.emit('load-todos')
     } catch (error) {
       toast({ status: 'error', title: getMessageFromBeResonse(error) })
+    } finally {
+      emitter.emit('load-todos');
     }
   }
 

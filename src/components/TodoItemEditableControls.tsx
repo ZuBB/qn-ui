@@ -11,12 +11,14 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  useEditableControls
+  useEditableControls,
+  useToast
 } from '@chakra-ui/react';
 import { CheckIcon, CloseIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import axios from 'axios';
 import { Todo } from '../interfaces';
 import { emitter } from '../event-bus';
+import { getMessageFromBeResonse } from '../utils';
 
 type Props = {
   todo: Todo
@@ -25,6 +27,7 @@ type Props = {
 const getTodoUrl = (id: number): string => `/api/todos/${id}`;
 
 export const TodoItemEditableControls = ({ todo }: Props) => {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
@@ -36,8 +39,13 @@ export const TodoItemEditableControls = ({ todo }: Props) => {
 
   const onDeleteHandler = () => {
     const deleteTodo = async () => {
-      await axios.delete(getTodoUrl(todo.id));
-      emitter.emit('load-todos');
+      try {
+        await axios.delete(getTodoUrl(todo.id));
+      } catch (error) {
+        toast({ status: 'error', title: getMessageFromBeResonse(error) });
+      } finally {
+        emitter.emit('load-todos');
+      }
     };
 
     deleteTodo();

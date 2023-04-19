@@ -13,20 +13,22 @@ export const SearchTodos = () => {
 
   const onKeyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') return;
+    const newSearchParams = new URLSearchParams(searchParams)
 
     if (searchToken) {
-      searchParams.set('q', searchToken);
+      newSearchParams.set('q', searchToken);
     } else {
-      searchParams.delete('q');
+      newSearchParams.delete('q');
     }
 
-    setSearchParams(searchParams);
+    setSearchParams(newSearchParams);
   }
 
   const onResetTokenHander = () => {
     setSearchToken('');
-    searchParams.delete('q');
-    setSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams(searchParams)
+    newSearchParams.delete('q');
+    setSearchParams(newSearchParams);
   };
 
   useEffect(() => {

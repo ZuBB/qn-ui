@@ -7,11 +7,13 @@ import {
   Input,
   ListItem,
   Text,
+  useToast
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { TodoItemEditableControls } from './TodoItemEditableControls';
 import { Todo } from '../interfaces';
 import { emitter } from '../event-bus';
+import { getMessageFromBeResonse } from '../utils';
 
 type Props = {
   todo: Todo
@@ -20,16 +22,28 @@ type Props = {
 const getTodoUrl = (id: number): string => `/api/todos/${id}`;
 
 export const TodoItem = ({ todo }: Props) => {
+  const toast = useToast();
+
   const onToggleHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const completed = event.currentTarget.checked;
-    await axios.patch(getTodoUrl(todo.id), { completed });
-    emitter.emit('load-todos');
+    try {
+      await axios.patch(getTodoUrl(todo.id), { completed });
+    } catch (error) {
+      toast({ status: 'error', title: getMessageFromBeResonse(error) })
+    } finally {
+      emitter.emit('load-todos');
+    }
   };
 
   const onUpdateHandler = (newTodo: string) => {
     const updateTodo = async () => {
-      await axios.patch(getTodoUrl(todo.id), { todo: newTodo });
-      emitter.emit('load-todos');
+      try {
+        await axios.patch(getTodoUrl(todo.id), { todo: newTodo });
+      } catch (error) {
+        toast({ status: 'error', title: getMessageFromBeResonse(error) })
+      } finally {
+        emitter.emit('load-todos');
+      }
     };
 
     updateTodo();

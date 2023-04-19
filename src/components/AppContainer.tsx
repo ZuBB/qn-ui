@@ -10,7 +10,7 @@ import { GenericTodoList } from './GenericTodoList';
 import { AddTodo } from './AddTodo';
 import { SearchTodos } from './SearchTodos';
 
-const addTodoUrl = '/api/todos'
+const loadTodosUrl = '/api/todos';
 const syncUrl = '/api/todos/latest-timestamp';
 
 export const AppContainer = () => {

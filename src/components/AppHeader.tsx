@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { emitter } from '../event-bus';
+import { getMessageFromBeResonse } from '../utils';
 
 const clearTodosUrl = '/api/todos/wipe';
 
@@ -26,11 +27,11 @@ export const AppHeader = () => {
   const onDelete = async () => {
     try {
       await axios.delete(clearTodosUrl);
-      emitter.emit('load-todos');
-      onClose()
+      onClose();
     } catch (error) {
-      console.log('Smth happened', error)
-      toast({ status: 'error', title: 'Error occured during loading of todos' })
+      toast({ status: 'error', title: getMessageFromBeResonse(error) });
+    } finally {
+      emitter.emit('load-todos');
     }
   }
 
