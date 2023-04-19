@@ -23,7 +23,7 @@ export const AppContainer = () => {
   const getTodos = useCallback(
     async () => {
       try {
-        const finalUrl = addTodoUrl + '?' + window.location.search.toString();
+        const finalUrl = loadTodosUrl + window.location.search.toString();
         const { data } = (await axios.get<AllTodos>(finalUrl));
         setTodos(data);
       } catch (error) {
