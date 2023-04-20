@@ -22,7 +22,7 @@ export const InfoModalToggle = () => {
 
   const getCheckList = () => (
     <UnorderedList fontSize="sm">
-      <ListItem><Link href='http://[2a01:4f8:192:3277:10c::a365]:8000/'>demo (this site)</Link></ListItem>
+      <ListItem><Link href='http://ec2-52-26-169-186.us-west-2.compute.amazonaws.com/'>demo (this site)</Link></ListItem>
       <ListItem><Link href='https://github.com/ZuBB/qn-api'>back-end source code</Link></ListItem>
       <ListItem><Link href='https://github.com/ZuBB/qn-ui'>front-end source code</Link></ListItem>
       <ListItem>
@@ -60,6 +60,8 @@ export const InfoModalToggle = () => {
         <UnorderedList>
           <ListItem>tests</ListItem>
           <ListItem>i18n</ListItem>
+          <ListItem>responsive</ListItem>
+          <ListItem>BE&FE validations</ListItem>
           <ListItem>dockerfile</ListItem>
           <ListItem>Slimmer sync/API code at FE</ListItem>
           <ListItem>anything else?</ListItem>
